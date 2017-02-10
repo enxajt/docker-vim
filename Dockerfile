@@ -24,12 +24,12 @@ RUN cd /home/enxajt/.cache/dein \
   && curl -f https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
   && sh ./installer.sh /home/enxajt/.cache/dein
 
-USER enxajt
-WORKDIR /home/enxajt
-
 # TODO integrate
 RUN apt-get update && apt-get install -y \
   git
+
+USER enxajt
+WORKDIR /home/enxajt
 
 # vim dotfiles
 RUN mkdir -p /home/enxajt/.config
