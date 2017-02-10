@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
   python3-pip \
   ruby-dev \
   lua5.2 liblua5.2-dev  \
-  luajit libluajit-5.1
+  luajit libluajit-5.1 \
+  curl
 RUN pip install --upgrade pip
 RUN pip3 install --upgrade pip
 RUN pip3 install neovim
@@ -20,9 +21,9 @@ RUN apt-get update && apt-get install -y neovim
 #deinvim
 RUN mkdir -p /home/enxajt/.cache/dein
 RUN set -x \
-  cd /home/enxajt/.cache/dein && \
-  curl -f https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh && \
-  sh ./installer.sh /home/enxajt/.cache/dein
+  cd /home/enxajt/.cache/dein \
+  && curl -f https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
+  && sh ./installer.sh /home/enxajt/.cache/dein
 
 USER enxajt
 WORKDIR /home/enxajt
