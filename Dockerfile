@@ -1,5 +1,5 @@
 # それぞれの言語の拡張 vim用
-FROM ubuntu
+FROM debian 
 RUN apt-get update && apt-get install -y \
   libperl-dev \
   python-dev python3-dev  \
