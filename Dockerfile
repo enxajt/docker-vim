@@ -17,10 +17,10 @@ RUN add-apt-repository ppa:neovim-ppa/unstable
 RUN apt-get update && apt-get install -y neovim
 
 
-RUN set -x
 #deinvim
 RUN mkdir -p /home/enxajt/.cache/dein
-RUN cd /home/enxajt/.cache/dein && \
+RUN set x \
+  cd /home/enxajt/.cache/dein && \
   curl -f https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh && \
   sh ./installer.sh /home/enxajt/.cache/dein
 
