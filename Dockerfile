@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
   fonts-ipafont-gothic \
   fonts-ipafont-mincho \
   curl \
-  git
+  git \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 RUN alias curl='curl --noproxy localhost,127.0.0.1'
