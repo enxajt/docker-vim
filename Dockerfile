@@ -1,5 +1,20 @@
-# それぞれの言語の拡張 vim用
 FROM ubuntu
+
+RUN apt-get update && apt-get install -y \
+  language-pack-ja-base \
+  language-pack-ja \
+  ibus-mozc \
+  fonts-ipafont-gothic \
+  fonts-ipafont-mincho \
+  curl \
+  git
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+RUN alias curl='curl --noproxy localhost,127.0.0.1'
+RUN update-locale LANG=ja_JP.UTF-8 LANGUAGE=ja_JP:ja
+ENV LC_ALL C.UTF-8
+
+# それぞれの言語の拡張 vim用
 RUN apt-get update && apt-get install -y \
   libperl-dev \
   python-dev python3-dev  \
@@ -7,9 +22,7 @@ RUN apt-get update && apt-get install -y \
   python3-pip \
   ruby-dev \
   lua5.2 liblua5.2-dev  \
-  luajit libluajit-5.1 \
-  curl \
-  git
+  luajit libluajit-5.1
 RUN pip install --upgrade pip
 RUN pip3 install --upgrade pip
 RUN pip3 install neovim
@@ -18,14 +31,20 @@ RUN apt-get -y install software-properties-common
 RUN add-apt-repository ppa:neovim-ppa/unstable
 RUN apt-get update && apt-get install -y neovim
 
+ENV USER enxajt
+#RUN useradd -m -g sudo -s /bin/zsh $USER && echo "$USER:$USER" | chpasswd
+RUN useradd -m -g sudo -s /bin/zsh $USER
+USER $USER
+WORKDIR /home/$USER
+RUN git clone https://bitbucket.com/enxajt/private-config
+RUN ./private-config/git.sh
+RUN ./private-config/user.sh
+
 #deinvim
 RUN mkdir -p /home/enxajt/.cache/dein
 RUN cd /home/enxajt/.cache/dein \
   && curl -f https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
   && sh ./installer.sh /home/enxajt/.cache/dein
-
-USER enxajt
-WORKDIR /home/enxajt
 
 # vim dotfiles
 RUN mkdir -p /home/enxajt/.config
