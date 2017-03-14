@@ -37,12 +37,12 @@ RUN useradd -m -g sudo -s /bin/zsh $USER
 USER $USER
 WORKDIR /home/$USER
 
-RUN mkdir /root/.ssh/
 # Copy over private key, and set permissions
+RUN mkdir /root/.ssh/
 ADD id_rsa /root/.ssh/id_rsa
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
-RUN git clone git@bitbucket.org/enxajt/private-config.git
+RUN git clone git@bitbucket.org:enxajt/private-config.git
 RUN ./private-config/git.sh
 RUN ./private-config/user.sh
 
